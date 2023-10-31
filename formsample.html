@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="alert"></div>
+    <div class="col-sm-8 offset-sm-2 mt-4">
+        <div class="col-sm-8 offset-sm-2 mt-4" style="display: flex; justify-content: center; align-items: center;">
+            <form id="userform"
+                style="border: 1px solid black; width: fit-content; padding: 24px 64px; border-radius: 24px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <div style="margin-right: 10px;"><label for="name">Name:</label></div>
+                    <div><input type="text" name="name" id="name" style="border-radius: 8px;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <div style="margin-right: 10px;"><label for="surname">Surname:</label></div>
+                    <div><input type="text" name="surname" id="surname" style="border-radius: 8px;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <div><label for="age">Age:</label></div>
+                    <div><input type="number" name="surname" id="age" style="border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <button type="reset" style="border-radius: 8px;" class="btn btn-danger">Reset</button>
+                    <button type="submit" style="border-radius: 8px;" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-8 offset-sm-2 mt-4 ">
+            <ul class="list-group" id="userList" >
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    let userformDOM = document.querySelector("#userform")
+    userformDOM.addEventListener("submit", formHandler)
+    let alertDOM = document.querySelector("#alert")
+
+    const alertFunction = (title, message, className) => `
+    <div class="alert alert-${className} alert-dismissible fade show" role="alert">
+    <strong>${title}</strong>${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>`
+
+    function formHandler(event) {
+        event.preventDefault()
+        const NAME = document.querySelector("#name")
+        const SURNAME = document.querySelector("#surname")
+        const AGE = document.querySelector("#age")
+          
+        if (NAME.value && SURNAME.value && AGE.value >=1 ) {
+            addItem(NAME.value, SURNAME.value, AGE.value)
+            NAME.value = ""
+            SURNAME.value = ""
+            AGE.value = ""
+        } else {
+            alertDOM.innerHTML = alertFunction(
+                "Baslik Bilgisi       ",
+                "Eksik Bilgi Girdiniz!",
+                "danger"
+            )
+        }
+
+    }
+
+    let userListDOM = document.querySelector("#userList")
+
+    const addItem = (name, surname, age) => {
+        let liDOM = document.createElement("li")
+        liDOM.innerHTML = `${name} ${surname} <span class="badge bg-primary rounded-pill"> ${age} </span> `
+        liDOM.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'rounded-pill', 'border', 'border-dark', 'mb-3')
+        userListDOM.append(liDOM)
+    }
+
+   
+</script>
+
+</html>
